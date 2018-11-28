@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="DeployDepot", group="Team15034")
+@Autonomous(name="Depot No Deploy", group="group")
 //@Disabled
-public class DeployDepot extends LinearOpMode {
+public class IaDepotLeftAutonomous extends LinearOpMode {
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -46,7 +46,7 @@ public class DeployDepot extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-//Needs lift code, which is on another file atm
+
             //This might collide with our teammate's robot
 
             lift.setPower(0.3);
@@ -55,11 +55,20 @@ public class DeployDepot extends LinearOpMode {
             turnLeft(0.5,1000);
             sleep(1000);
             turnLeft(-.5, 500);
+            //sample left
+            turnLeft(0.5,500);
+            sleep(1000);
+            straight(0.5,600);
+            sleep(1000);
+            straight(-0.5,600);
+            sleep(1000);
+            turnRight(0.5,500);
+            sleep(1000);
             //Goes to depot
             intakeDeployer.setPosition(-.5);
-            straight(0.5, 1350);
+            straight(0.5, 1300);
             intake.setPower(.6);
-            sleep(3000);
+            sleep(1000);
             intake.setPower(0);
             sleep(1000);
             straight(-0.5,500);

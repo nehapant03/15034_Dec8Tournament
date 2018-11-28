@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
-@Autonomous(name="DeployCrater", group="Team15034")
+@Autonomous(name="Depot No Deploy", group="group")
 //@Disabled
-public class DeployCrater extends LinearOpMode {
+public class IaDepotStraightAutonomous extends LinearOpMode {
+
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFront;
@@ -40,49 +40,30 @@ public class DeployCrater extends LinearOpMode {
         rightFront.setDirection(DcMotor.Direction.FORWARD);
 
         lift.setPower(-.1);
-
         waitForStart();
         runtime.reset();
 
 
         while (opModeIsActive()) {
 
-//This might collide with teammate's robot
-            //Needs lift code, which is on another file atm
-//goes through middle and back up
+
+            //This might collide with our teammate's robot
 
             lift.setPower(0.3);
             sleep(1000);
             lift.setPower(0);
-            turnRight(0.5,1000);
+            turnLeft(0.5,1000);
             sleep(1000);
-            turnLeft(0.5,500);
+            turnLeft(-.5, 500);
+            //Goes to depot
             intakeDeployer.setPosition(-.5);
-            straight(0.5, 720);
+            straight(0.5, 1300);
+            intake.setPower(.6);
             sleep(1000);
-            straight(-0.5, 430);
-            sleep(1000);
-            //turn and go to wall
-            turnLeft(0.5, 630);
-            sleep(1000);
-            straight(0.5, 1210);
-            sleep(1000);
-            //turn and go to depot
-            turnLeft(0.5, 300);
-            sleep(1000);
-            straight(0.5, 1420);
-            sleep(1000);
-            intake.setPower(0.6);
-            sleep(3000);
             intake.setPower(0);
-            //turn and go to crater
-            //   turnRight(0.5,1590);
-            // sleep(1000);
-            //straight(0.6, 3000);
-            //turnLeft(.6, 500);
-            //straight(.6, 700);
-            // sleep(1000);
-
+            sleep(1000);
+            straight(-0.5,500);
+            sleep(1000);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFront.getPower(), rightFront.getPower());
@@ -108,21 +89,6 @@ public class DeployCrater extends LinearOpMode {
     }
 
     public void turnRight(double power, int time) {
-        leftFront.setPower(power);
-        leftBack.setPower(power);
-        rightFront.setPower(-power);
-        rightBack.setPower(-power);
-
-        sleep(time);
-
-        leftFront.setPower(0);
-        leftBack.setPower(0);
-        rightFront.setPower(0);
-        rightBack.setPower(0);
-
-    }
-
-    public void turnLeft(double power, int time) {
         leftFront.setPower(-power);
         leftBack.setPower(-power);
         rightFront.setPower(power);
@@ -137,5 +103,19 @@ public class DeployCrater extends LinearOpMode {
 
     }
 
-}
+    public void turnLeft(double power, int time) {
+        leftFront.setPower(power);
+        leftBack.setPower(power);
+        rightFront.setPower(-power);
+        rightBack.setPower(-power);
 
+        sleep(time);
+
+        leftFront.setPower(0);
+        leftBack.setPower(0);
+        rightFront.setPower(0);
+        rightBack.setPower(0);
+
+    }
+
+}
