@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Crater No Deploy", group="group")
+@Autonomous(name="Crater Left", group="group")
 //@Disabled
 public class IaCraterLeftAutonomous extends LinearOpMode {
 

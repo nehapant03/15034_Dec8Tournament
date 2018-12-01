@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Deploy Only", group="group")
+@Autonomous(name="Lift Only", group="group")
 //@Disabled
 public class IaAutonomousLift extends LinearOpMode {
 

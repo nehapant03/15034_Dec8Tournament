@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Depot No Deploy", group="group")
+@Autonomous(name="Depot Straight", group="group")
 //@Disabled
 public class IaDepotStraightAutonomous extends LinearOpMode {
 
