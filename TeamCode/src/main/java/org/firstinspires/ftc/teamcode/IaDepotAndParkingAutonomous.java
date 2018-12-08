@@ -18,7 +18,7 @@ public class IaDepotAndParkingAutonomous extends LinearOpMode {
     private DcMotor rightBack;
     private DcMotor intake;
     private DcMotor lift;
-    private Servo intakeDeployer;
+    private DcMotor arm;
 
     @Override
     public void runOpMode() {
@@ -32,12 +32,14 @@ public class IaDepotAndParkingAutonomous extends LinearOpMode {
 
         lift = hardwareMap.get(DcMotor.class, "LIFT");
         intake = hardwareMap.get(DcMotor.class, "INTAKE");
-        intakeDeployer = hardwareMap.get(Servo.class, "SERVO");
+        arm = hardwareMap.get(DcMotor.class, "ARM");
+
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
 
         lift.setPower(-.1);
         waitForStart();
@@ -49,24 +51,32 @@ public class IaDepotAndParkingAutonomous extends LinearOpMode {
             //This might collide with our teammate's robot
 
             lift.setPower(0.3);
-            sleep(1000);
+            sleep(1250);
             lift.setPower(0);
             turnLeft(0.5,1000);
             sleep(1000);
-            turnLeft(-.5, 500);
+            turnLeft(-.5, 580);
             //Goes to depot
-            intakeDeployer.setPosition(-.5);
-            straight(0.5, 1300);
+            arm.setPower(0.8);
+            sleep(500);
+            arm.setPower(0);
+            straight(0.5, 1420);
+            straight(1,200);
+            straight(-1,200);
+            sleep(1000);
             intake.setPower(.6);
             sleep(1000);
             intake.setPower(0);
             sleep(1000);
-            straight(-0.5,500);
+            straight(-0.5,680);
             sleep(1000);
-            turnRight(0.5,700);
+            //going to crater
+            turnRight(-0.5,700);
             sleep(1000);
-            straight(0.6, 3000);
+            straight(0.6, 850);
             sleep(1000);
+            turnRight(-0.6, 150);
+            straight(0.8,2000);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFront.getPower(), rightFront.getPower());

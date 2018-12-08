@@ -18,7 +18,7 @@ public class IaDepotStraightAutonomous extends LinearOpMode {
     private DcMotor rightBack;
     private DcMotor intake;
     private DcMotor lift;
-    private Servo intakeDeployer;
+    private DcMotor arm;
 
     @Override
     public void runOpMode() {
@@ -32,12 +32,13 @@ public class IaDepotStraightAutonomous extends LinearOpMode {
 
         lift = hardwareMap.get(DcMotor.class, "LIFT");
         intake = hardwareMap.get(DcMotor.class, "INTAKE");
-        intakeDeployer = hardwareMap.get(Servo.class, "SERVO");
+        arm = hardwareMap.get(DcMotor.class, "ARM");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
 
         lift.setPower(-.1);
         waitForStart();
@@ -56,7 +57,6 @@ public class IaDepotStraightAutonomous extends LinearOpMode {
             sleep(1000);
             turnLeft(-.5, 500);
             //Goes to depot
-            intakeDeployer.setPosition(-.5);
             straight(0.5, 1300);
             intake.setPower(.6);
             sleep(1000);

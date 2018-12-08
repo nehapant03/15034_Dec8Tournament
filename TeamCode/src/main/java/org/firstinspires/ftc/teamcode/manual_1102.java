@@ -35,19 +35,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
 @TeleOp(name="manual_1102", group="Team15304")
 
 public class manual_1102 extends LinearOpMode {
@@ -56,9 +43,13 @@ public class manual_1102 extends LinearOpMode {
 
         Right Trigger: Elevator Up
         Left Trigger: Elevator Down
+        Right Bumper: Arm Up
+        Left Bumper: Arm Down
         X: Forward Intake
         Y: Stop Intake
         A: Reverse Intake
+        B: Stop Arm
+
      */
     private DcMotor leftFront;
     private DcMotor rightFront;
@@ -66,6 +57,7 @@ public class manual_1102 extends LinearOpMode {
     private DcMotor rightBack;
     private DcMotor intake;
     private DcMotor elevator;
+    private DcMotor armIntake;
 
 
     @Override
@@ -78,6 +70,7 @@ public class manual_1102 extends LinearOpMode {
         rightFront = hardwareMap.get(DcMotor.class, "RF");
         intake = hardwareMap.get(DcMotor.class, "INTAKE");
         elevator = hardwareMap.get(DcMotor.class, "LIFT");
+        armIntake = hardwareMap.get(DcMotor.class, "ARM");
 
         //leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         //eftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -98,7 +91,6 @@ public class manual_1102 extends LinearOpMode {
             setLeftPower(gamepad1.left_stick_y);
 
             // ELEVATOR FUNCTIONALITY (TWO BUTTONS)
-            // WON"T STOP UPON RELEASE OF BUTTON
             while(gamepad1.right_trigger > .05) {
                 // Go Up
                 lift(0.5);
@@ -112,7 +104,6 @@ public class manual_1102 extends LinearOpMode {
             }
 
             // INTAKE METHOD
-            // STILL NEEDS SOME DOUBLE-CLICKING TO STOP
             if(gamepad1.x){
                 intake(-.4);
             }
@@ -123,12 +114,17 @@ public class manual_1102 extends LinearOpMode {
                 intake(.4);
             }
 
-            if(gamepad1.dpad_up){
-                lift(-.1);
-            }
-
-            if(gamepad1.dpad_down){
-                lift(0);
+            /* NEW ROBOT ARM! MAKE SURE TO ADJUST
+               VALUES AND CHANGE SIGNS WHEN NECESSARY!
+             */
+            if (gamepad1.right_bumper) {
+                // Go Up
+                armIntake.setPower(-0.4);
+            } else if (gamepad1.left_bumper) {
+                // Go Down
+                armIntake.setPower(0.4);
+            } else if (gamepad1.b) {
+                armIntake.setPower(0);
             }
 
             /* ALTERNATE ELEVATOR FUNCTIONALITY (ONE BUTTON)

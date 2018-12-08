@@ -19,7 +19,7 @@ public class IaCraterAndParkingAutonomous extends LinearOpMode {
         private DcMotor rightBack;
         private DcMotor intake;
         private DcMotor lift;
-        private Servo intakeDeployer;
+        private DcMotor arm;
 
          @Override
          public void runOpMode() {
@@ -33,12 +33,13 @@ public class IaCraterAndParkingAutonomous extends LinearOpMode {
 
              lift = hardwareMap.get(DcMotor.class, "LIFT");
              intake = hardwareMap.get(DcMotor.class, "INTAKE");
-             intakeDeployer = hardwareMap.get(Servo.class, "SERVO");
+             arm = hardwareMap.get(DcMotor.class, "ARM");
 
              leftFront.setDirection(DcMotor.Direction.REVERSE);
              leftBack.setDirection(DcMotor.Direction.REVERSE);
              rightBack.setDirection(DcMotor.Direction.FORWARD);
              rightFront.setDirection(DcMotor.Direction.FORWARD);
+             arm.setDirection(DcMotor.Direction.FORWARD);
 
              lift.setPower(-.1);
 
@@ -56,7 +57,9 @@ public class IaCraterAndParkingAutonomous extends LinearOpMode {
                  turnRight(0.5,1000);
                  sleep(1000);
                  turnLeft(0.5,500);
-                 intakeDeployer.setPosition(-.5);
+                 arm.setPower(-0.4);
+                 sleep(1000);
+                 arm.setPower(0);
                  straight(0.5, 720);
                  sleep(1000);
                  straight(-0.5, 430);
